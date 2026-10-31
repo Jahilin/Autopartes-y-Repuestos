@@ -1,6 +1,7 @@
 <?php
     declare(strict_types=1);
-    require_once 'config/conexion.php';
+    require_once __DIR__ . '/../config/conexion.php';
+    require_once __DIR__ . '/../includes/helpers.php';
     
 class Usuario{
 
@@ -14,9 +15,12 @@ class Usuario{
 
     public function autenticar(string $email, string $password): bool
     {
-        $sql = 'SELECT * FROM usuarios WHERE email = :email AND activo = 1 LIMIT 1';
+        $sql = 'SELECT u.*, r.nombre AS rol_nombre 
+                FROM usuarios u 
+                INNER JOIN roles r ON r.id_rol = u.id_rol 
+                WHERE u.email = :email';
         $stmt = $this->pdo->prepare($sql);    
-        $stmt ->execute(['email' => $email]);
+        $stmt->execute(['email' => $email]);
 
         $usuario = $stmt->fetch();
 
@@ -24,15 +28,17 @@ class Usuario{
             return false;
         }
 
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
         session_regenerate_id(true);
         $_SESSION['usuario'] = [
-            'id'     => (int) $usuario['id'],
+            'id'     => (int) $usuario['id_usuario'],
             'nombre' => (string) $usuario['nombre'],
             'email'  => (string) $usuario['email'],
-            'rol'    => (string) $usuario['rol'],
+            'rol'    => strtolower(trim($usuario['rol_nombre'])), // admin | bodeguero
         ];
         $_SESSION['ultimo_acceso'] = time();
-
         return true;
     }
 
@@ -59,6 +65,29 @@ class Usuario{
 
     public static function esAdmin(): bool {
         return self::rol() === 'admin';
+    }
+
+     /**
+     * Protección de rutas  para el panel administrativo.
+     */
+
+     public static function tieneRol(string ...$roles): bool{
+        return self::estaAutenticado() && in_array(self::rol(), $roles, true);
+    }
+
+    public static function protegerPanel(string ...$roles): void{
+        $roles = $roles ?: ['admin', 'bodeguero'];
+        if (!self::tieneRol(...$roles)) {
+            flash('warning', 'Debe iniciar sesión con un usuario autorizado para acceder al panel.');
+            header('Location: login.php');
+            exit;
+        }
+    }
+
+    public function listar(): array{
+        $sql = 'SELECT id_usuario, nombre, email, id_rol FROM usuarios ORDER BY id';
+        $stmt = $this->pdo->prepare($sql);
+        return $stmt->fetchAll();
     }
 
 }

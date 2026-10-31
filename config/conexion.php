@@ -5,8 +5,8 @@ class Conexion {
     public function obtener() {
         $servidor = 'localhost';
         $base = 'repuestos_don_pancho';
-        $usuario = 'root';
-        $clave = '';
+        $usuario = 'edu';
+        $clave = 'Acomod@2enCasa';
 
         try {
             $pdo = new PDO("mysql:host=$servidor;dbname=$base;charset=utf8mb4", $usuario, $clave);

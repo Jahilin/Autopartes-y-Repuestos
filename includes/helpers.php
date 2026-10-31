@@ -36,3 +36,13 @@ function csrf_verificar(?string $token): bool{
     return !empty($_SESSION['csrf_token']) && is_string($token)
         && hash_equals($_SESSION['csrf_token'], $token);
 }
+
+// Para acceder a las rutas mas facil, limpia la ruta y busca a partir de donde ya esta el archivo
+
+function base_url(string $ruta = ''): string
+{
+    $script = str_replace('\\', '/', dirname($_SERVER['SCRIPT_NAME'] ?? '/'));
+    $raiz = preg_replace('#/(admin)$#', '', $script);
+    $raiz = rtrim($raiz, '/');
+    return $raiz . '/' . ltrim($ruta, '/');
+}
