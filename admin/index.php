@@ -1,0 +1,1 @@
+<h1>Inicio de Administrador</h1>
