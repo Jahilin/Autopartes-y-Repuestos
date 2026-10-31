@@ -34,7 +34,7 @@ CREATE TABLE roles (
 CREATE TABLE usuarios (
     id_usuario  INT AUTO_INCREMENT PRIMARY KEY,
     nombre      VARCHAR(100) NOT NULL,
-    usuario     VARCHAR(50)  NOT NULL UNIQUE,
+    email     VARCHAR(150)  NOT NULL UNIQUE,
     password    VARCHAR(255) NOT NULL,
     id_rol      INT NOT NULL,
     CONSTRAINT fk_usuarios_roles
@@ -131,10 +131,10 @@ INSERT INTO roles (nombre) VALUES ('Admin'), ('Bodega');
 -- Usuarios
 --   admin  / Admin123
 --   bodega / Bodega123
-INSERT INTO usuarios (nombre, usuario, password, id_rol) VALUES
-('Administrador Don Pancho', 'admin',
+INSERT INTO usuarios (nombre, email, password, id_rol) VALUES
+('Administrador Don Pancho', 'admin@donpancho.hn',
  '$2y$10$tYtNb3V/lBEGbOfFK.sxlulD9AcellDG2x9KJaCWgbk.iuOrgBPBi', 1),
-('Encargado de Bodega', 'bodega',
+('Encargado de Bodega', 'bodega@donpancho.hn',
  '$2y$10$1n2s0TDJT9NEha2lEsea9.N/E8uTrP9/zULcVpyrKwdwoQdHfyjyu', 2);
 
 -- Categorías
