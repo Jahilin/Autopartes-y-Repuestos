@@ -7,7 +7,7 @@ require_once __DIR__ . '/clases/Usuario.php';
 if (Usuario::estaAutenticado()) {
     $rol = Usuario::rol();
     if ($rol === 'admin' || $rol === 'bodeguero') {
-        header('Location: admin_index.php');
+        header('Location: panel.php');
     } else {
         header('Location: index.php');
     }
@@ -30,7 +30,7 @@ if (metodo_post()) {
             flash('success', 'Bienvenido de nuevo, ' . Usuario::usuarioActual()['nombre'] . '!');
             $rol = Usuario::rol();
             if ($rol === 'admin' || $rol === 'bodeguero') {
-                header('Location: admin_index.php');
+                header('Location: panel.php');
             } else {
                 header('Location: index.php');
             }
