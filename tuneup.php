@@ -47,7 +47,7 @@ foreach ($aceites as $a) {
 }
 uksort($viscosidades, fn($x, $y) => (int) $x <=> (int) $y);
 
-.
+
 $datosJs = ['vehiculos' => [], 'aceites' => $aceites, 'filtros' => [], 'adicionales' => []];
 foreach ($vehiculos as $clave => $v) {
     $datosJs['vehiculos'][] = ['clave' => $clave, 'nombre' => $v['nombre'], 'galones' => $v['galones']];
