@@ -35,6 +35,32 @@ class Usuario{
 
         return true;
     }
+
+     public static function cerrarSesion(): void{
+        $_SESSION = [];
+        if (ini_get('session.use_cookies')) {
+            $parametros = session_get_cookie_params();
+            setcookie(session_name(), '', time() - 42000, $parametros['path'], $parametros['domain'], $parametros['secure'], $parametros['httponly']);
+        }
+        session_destroy();
+    }
+
+    public static function usuarioActual(): ?array{
+        return $_SESSION['usuario'] ?? null;
+    }
+
+    public static function estaAutenticado(): bool {
+        return !empty($_SESSION['usuario']['id']);
+    }
+
+    public static function rol(): ?string {
+        return $_SESSION['usuario']['rol'] ?? null;
+    }
+
+    public static function esAdmin(): bool {
+        return self::rol() === 'admin';
+    }
+
 }
 
 ?>
