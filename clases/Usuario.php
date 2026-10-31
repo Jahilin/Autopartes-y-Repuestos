@@ -84,12 +84,14 @@ class Usuario{
         }
     }
 
+    /*Funcion de pruebas para ver usuarios
+    
     public function listar(): array{
         $sql = 'SELECT id_usuario, nombre, email, id_rol FROM usuarios ORDER BY id';
         $stmt = $this->pdo->prepare($sql);
         return $stmt->fetchAll();
     }
-
+*/
 }
 
 ?>
