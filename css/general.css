@@ -1,0 +1,91 @@
+/* Estilos generales de todo el sitio */
+
+/* Colores del proyecto */
+:root {
+    --carbon: #1B1B1E;
+    --rojo: #D62828;
+    --rojo-oscuro: #A71D1D;
+    --ambar: #FFB703;
+    --gris-acero: #495057;
+    --fondo: #F4F4F6;
+}
+
+body {
+    background-color: var(--fondo);
+    color: var(--carbon);
+}
+
+/* Barra de navegación y pie de página */
+.barra-oscura {
+    background-color: var(--carbon);
+    border-bottom: 4px solid var(--rojo);
+}
+
+.pie-oscuro {
+    background-color: var(--carbon);
+    color: white;
+    border-top: 4px solid var(--ambar);
+}
+
+/* Banner principal de la página de inicio */
+.banner {
+    background-color: var(--carbon);
+    color: white;
+    border-bottom: 6px solid var(--ambar);
+}
+
+/* Botón principal (rojo) */
+.btn-principal {
+    background-color: var(--rojo);
+    border-color: var(--rojo);
+    color: white;
+}
+
+.btn-principal:hover {
+    background-color: var(--rojo-oscuro);
+    border-color: var(--rojo-oscuro);
+    color: white;
+}
+
+/* Botón secundario (ámbar) */
+.btn-acento {
+    background-color: var(--ambar);
+    border-color: var(--ambar);
+    color: var(--carbon);
+}
+
+.btn-acento:hover {
+    background-color: #E5A400;
+    border-color: #E5A400;
+    color: var(--carbon);
+}
+
+/* Títulos de sección con línea roja a la izquierda */
+.titulo-seccion {
+    border-left: 6px solid var(--rojo);
+    padding-left: 12px;
+    margin-bottom: 24px;
+}
+
+/* Precios y etiquetas de categoría */
+.precio {
+    color: var(--rojo);
+    font-weight: bold;
+}
+
+.etiqueta {
+    background-color: var(--ambar);
+    color: var(--carbon);
+    font-size: 12px;
+    padding: 2px 8px;
+    border-radius: 4px;
+}
+
+/* Las tarjetas se levantan un poco al pasar el mouse */
+.tarjeta-repuesto {
+    transition: transform 0.2s;
+}
+
+.tarjeta-repuesto:hover {
+    transform: translateY(-4px);
+}
