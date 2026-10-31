@@ -14,6 +14,15 @@ function flash(string $tipo, string $mensaje): void{
     $_SESSION['flash'][] = ['tipo' => $tipo, 'mensaje' => $mensaje];
 }
 
+function etiqueta_rol(?string $rol): string{
+    return match ($rol) {
+        'admin'     => 'Admin',
+        'bodeguero' => 'Bodega',
+        default     => ucfirst((string) $rol),
+    };
+}
+
+
 function obtener_flash(): array{
     $mensajes = $_SESSION['flash'] ?? [];
     unset($_SESSION['flash']);
