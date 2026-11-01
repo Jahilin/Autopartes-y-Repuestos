@@ -13,9 +13,9 @@ class SubidaArchivo
     private string $mensajeError = '';
     private string $nombreGuardado = '';
 
-    public function __construct(string $carpetaDestino = null)
+    public function __construct(?string $carpetaDestino = null)
     {
-        // Por defecto: carpeta uploads/ en la raíz del proyecto
+        // Por defecto: carpeta uploads/ en la raiz del proyecto
         $this->carpetaDestino = rtrim($carpetaDestino ?? dirname(__DIR__) . '/uploads', '/\\') . DIRECTORY_SEPARATOR;
     }
 
@@ -28,7 +28,7 @@ class SubidaArchivo
         $this->mensajeError = '';
         $this->nombreGuardado = '';
 
-        // CANDADO 1: la subida llegó sin errores
+        // CANDADO 1: la subida llego sin errores
         if (!isset($_FILES[$campo]) || $_FILES[$campo]['error'] !== UPLOAD_ERR_OK) {
             $codigo = $_FILES[$campo]['error'] ?? UPLOAD_ERR_NO_FILE;
             $this->mensajeError = $this->mensajeDeErrorPHP($codigo);
@@ -37,7 +37,7 @@ class SubidaArchivo
 
         $archivo = $_FILES[$campo];
 
-        // CANDADO 2: tamaño máximo de 4 MB
+        // CANDADO 2: tamaño max de 4 MB
         if ($archivo['size'] > self::TAMANO_MAXIMO) {
             $this->mensajeError = 'La fotografía supera el límite de 4 MB.';
             return false;
@@ -57,7 +57,7 @@ class SubidaArchivo
             return false;
         }
 
-        // CANDADO 4: nombre único criptográfico y guardado en uploads/
+        // CANDADO 4: nombre unico guardado en uploads/
         $nombreNuevo = bin2hex(random_bytes(16)) . '.' . $extension;
         $rutaFinal = $this->carpetaDestino . $nombreNuevo;
 
