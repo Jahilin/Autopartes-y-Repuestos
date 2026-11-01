@@ -1,5 +1,6 @@
 <?php 
 require_once __DIR__ . '/../clases/Usuario.php';
+require_once __DIR__ . '/auth_check.php';
 
 $usuarioActual = Usuario::usuarioActual();
 $enAdmin = str_contains($_SERVER['SCRIPT_NAME'] ?? '', '/admin/');
@@ -16,12 +17,12 @@ $enAdmin = str_contains($_SERVER['SCRIPT_NAME'] ?? '', '/admin/');
         </button>
         <div class="collapse navbar-collapse" id="navPrincipal">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="nav-item"><a class="nav-link" href="">Inicio</a></li>
+                <li class="nav-item"><a class="nav-link" href="<?= e(base_url('index.php')) ?>">Inicio</a></li>
                 <li class="nav-item"><a class="nav-link" href="">Catálogo</a></li>
                 <li class="nav-item"><a class="nav-link" href="">Arma tu Kit</a></li>
                 <li class="nav-item"><a class="nav-link" href="">Sucursales</a></li>
                 <?php if ($usuarioActual): ?>
-                    <li class="nav-item"><a class="nav-link <?= $enAdmin ? 'active' : '' ?>" href="<?= e(base_url('admin/index.php')) ?>"><i class="bi bi-speedometer2 me-1"></i>Panel</a></li>
+                    <li class="nav-item"><a class="nav-link <?= $enAdmin ? 'active' : '' ?>" href="<?= e(base_url('panel.php')) ?>"><i class="bi bi-speedometer2 me-1"></i>Panel</a></li>
                 <?php endif; ?>
             </ul>
             <div class="d-flex align-items-center gap-2 flex-wrap">

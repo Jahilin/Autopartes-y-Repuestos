@@ -36,7 +36,7 @@ class Usuario{
             'id'     => (int) $usuario['id_usuario'],
             'nombre' => (string) $usuario['nombre'],
             'email'  => (string) $usuario['email'],
-            'rol'    => strtolower(trim($usuario['rol_nombre'])), // admin | bodeguero
+            'rol'    => strtolower(trim($usuario['rol_nombre'])), // admin | bodega
         ];
         $_SESSION['ultimo_acceso'] = time();
         return true;
@@ -85,7 +85,7 @@ class Usuario{
     }
 
     /*Funcion de pruebas para ver usuarios
-    
+
     public function listar(): array{
         $sql = 'SELECT id_usuario, nombre, email, id_rol FROM usuarios ORDER BY id';
         $stmt = $this->pdo->prepare($sql);

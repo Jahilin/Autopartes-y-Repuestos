@@ -6,7 +6,7 @@ require_once __DIR__ . '/clases/Usuario.php';
 
 if (Usuario::estaAutenticado()) {
     $rol = Usuario::rol();
-    if ($rol === 'admin' || $rol === 'bodeguero') {
+    if ($rol === 'admin' || $rol === 'bodega') {
         header('Location: panel.php');
     } else {
         header('Location: index.php');
@@ -55,11 +55,7 @@ require __DIR__ . '/includes/head.php';
                         <p class="small text-white-50 mb-3">
                             Área privada para la gestión del inventario, control de roles y bodega de repuestos.
                         </p>
-                        <ul class="list-unstyled small d-grid gap-2 mb-0">
-                            <li><i class="bi bi-shield-lock text-warning me-2"></i>Acceso por roles</li>
-                            <li><i class="bi bi-box-seam text-warning me-2"></i>CRUD de inventario</li>
-                            <li><i class="bi bi-image text-warning me-2"></i>Subida segura de fotos</li>
-                        </ul>
+                       
                     </div>
                     <div class="col-md-7">
                         <div class="p-4 p-md-5">
@@ -93,8 +89,9 @@ require __DIR__ . '/includes/head.php';
 
                             <div class="alert alert-light border small mt-4 mb-0 text-center">
                                 <strong>Usuarios de prueba: (invisibles)</strong><br><br>
-                                <div class="text-white">
-                                    Admin: admin@donpancho.hn / Admin123 <br> Bodega: bodega@donpancho.hn / Bodega123
+                                <div class="text-dark">
+                                    Admin: admin@donpancho.hn / Admin123 <br> 
+                                    Bodega: bodega@donpancho.hn / Bodega123
                                 </div>
                                 
                                 

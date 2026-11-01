@@ -2,7 +2,7 @@
 require_once __DIR__ . '/includes/auth_check.php';
 require_once __DIR__ . '/clases/Usuario.php';
 
-Usuario::protegerPanel('admin', 'bodeguero');
+Usuario::protegerPanel('admin', 'bodega');
 
 $titulo = 'Panel de Inventario';
 require_once __DIR__ . '/includes/head.php';
