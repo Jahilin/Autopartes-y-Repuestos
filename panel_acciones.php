@@ -47,5 +47,38 @@ function repuestoEliminar(PDO $pdo, int $id): void {
 }
 //FIN TEMPORAL
 
+//Borra una foto de uploads/
+function borrarFoto(string $carpeta, ?string $nombre): void{
+    if(!$nombre) return;
+    $ruta = $carpeta . basename($nombre);
+    if(is_file($ruta)) $unlink($ruta);
+}
 
+//Valida y limpia el formulario
+function leerDatos(): array{
+    $codigo = trim($_POST['codigo'] ?? '');
+    $nombre = trim($_POST['nombre'] ?? '');
+    $especificaciones = trim($_POST['especificaciones'] ?? '');
+    $idCategoria = (int)($_POST['id_categoria'] ?? 0);
+    $precio = $_POST['precio'] ?? '';
+    $stock = $_POST['stock'] ?? '';
+    $destacado = ($_POST['destacado'] ?? '0') === '1' ? 1:0;
+
+    if($codigo === '' || strlen($codigo)>20) responder(false, 'Codigo obligatorio (maximo 20 caracteres).');
+    if($nombre === '' || strlen($nombre)>120) responder(false, 'nombre obligatorio (maximo 120 caracteres).');
+    if($especificaciones === '') responder(false, 'las especificaciones son obligatorias');
+    if($idCategoria <= 0) responder(false, 'Seleccione una categoria');
+    if(!is_numeric($precio) || (float)$precio < 0) responder(false, 'El precio debe ser un numero mayor o igual a 0');
+    if(filter_var($stock, FILTER_VALIDATE_INT) === false || (int)$stock < 0) responder(false, 'las existencias deben ser mayor o iguales a 0');
+
+    return [
+        'codigo' => $codigo,
+        'nombre' => $nombre,
+        'especificaciones' => $especificaciones,
+        'precio' => round((float)$precio,2 ),
+        'stock' => (int)$stock,
+
+    ];
+    
+}
 ?>
