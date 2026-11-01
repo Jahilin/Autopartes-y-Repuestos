@@ -19,6 +19,19 @@ $cantidad = [];
 if (isset($_GET['agregar']) && isset($repuestos[(int) $_GET['agregar']])) {
     $cantidad[(int) $_GET['agregar']] = 1;
 }
+if (isset($_GET['kit'])) {
+    foreach (explode(',', $_GET['kit']) as $item) {
+        $partes = explode(':', $item, 2);
+        if (count($partes) !== 2) {
+            continue;
+        }
+        $id   = (int) $partes[0];
+        $cant = (int) $partes[1];
+        if (isset($repuestos[$id]) && $cant > 0 && $cant <= 999) {
+            $cantidad[$id] = $cant;
+        }
+    }
+}
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $cliente['nombre']   = trim($_POST['nombre'] ?? '');
