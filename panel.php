@@ -217,4 +217,91 @@ foreach ($categorias as $c) {$opcionesCategorias .= '<option value="' . (int)$c[
   </div>
 </div>
 
+<!-- MODAL DE ELIMINACION-->
+<div class="modal fade" id="modalEliminar" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog">
+    <form class="modal-content formulario-ajax" data-modal="modalEliminar">
+      <input type="hidden" name="accion" value="eliminar">
+      <input type="hidden" name="id_repuesto" id="eliminar_id">
+      <div class="modal-header">
+        <h2 class="modal-title h5">Confirmar eliminacion</h2>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+      </div>
+      <div class="modal-body">
+        <div class="alerta-modal"></div>
+        <p class="mb-0">¿Seguro que deseas eliminar <strong id="eliminar_nombre"></strong>?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        <button type="submit" class="btn btn-danger">Eliminar</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<?php include __DIR__ . '/includes/footer.php'; ?>
+
+
+
+<!-- JAVASCRIPT-->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+const SIN_FOTO = <?= json_encode($sinFoto) ?>;
+
+// Carga los datos del repuesto elegido en el modal de edición
+document.getElementById('modalEdicion').addEventListener('show.bs.modal', e => {
+    const d = e.relatedTarget.dataset;
+    edit_id.value = d.id;
+    edit_codigo.value = d.codigo;
+    edit_nombre.value = d.nombre;
+    edit_categoria.value = d.categoria;
+    edit_especificaciones.value = d.especificaciones;
+    edit_precio.value = d.precio;
+    edit_stock.value = d.stock;
+    edit_destacado.value = d.destacado;
+    edit_vista_previa.src = d.foto ? 'uploads/' + d.foto : SIN_FOTO;
+    edit_vista_previa.onerror = () => { edit_vista_previa.src = SIN_FOTO; };
+});
+
+// Muestra el nombre del repuesto en el modal de eliminación
+document.getElementById('modalEliminar').addEventListener('show.bs.modal', e => {
+    eliminar_id.value = e.relatedTarget.dataset.id;
+    eliminar_nombre.textContent = e.relatedTarget.dataset.nombre;
+});
+
+function mostrarAlerta(contenedor, tipo, mensaje) {
+    contenedor.innerHTML = `<div class="alert alert-${tipo} alert-dismissible fade show" role="alert">
+        ${mensaje}<button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>`;
+}
+
+// Recarga solo la tabla, sin salir de la pantalla
+async function refrescarTabla() {
+    const html = await (await fetch(location.href)).text();
+    const doc = new DOMParser().parseFromString(html, 'text/html');
+    document.getElementById('cuerpoTabla').innerHTML = doc.getElementById('cuerpoTabla').innerHTML;
+}
+
+// Envio de los 3 formularios sin recargar la pagina
+document.querySelectorAll('.formulario-ajax').forEach(form => {
+    form.addEventListener('submit', async ev => {
+        ev.preventDefault();
+        const alertaModal = form.querySelector('.alerta-modal');
+        try {
+            const resp = await fetch('panel_acciones.php', { method: 'POST', body: new FormData(form) });
+            const json = await resp.json();
+            if (json.ok) {
+                bootstrap.Modal.getInstance(document.getElementById(form.dataset.modal)).hide();
+                form.reset();
+                alertaModal.innerHTML = '';
+                mostrarAlerta(document.getElementById('alertas'), 'success', json.mensaje);
+                await refrescarTabla();
+            } else {
+                mostrarAlerta(alertaModal, 'danger', json.mensaje);
+            }
+        } catch (err) {
+            mostrarAlerta(alertaModal, 'danger', 'No se pudo comunicar con el servidor.');
+        }
+    });
+});
+</script>
 </body>
