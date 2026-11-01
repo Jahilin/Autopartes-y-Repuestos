@@ -88,4 +88,133 @@ $sinFoto = 'data:image/svg+xml;utf8,' . rawurlencode(
         </table>
     </div>
 </main>
+
+<?php
+// opciones de categorias, reutilizadas en con los dos modales
+$opcionesCategorias = '';
+foreach ($categorias as $c) {$opcionesCategorias .= '<option value="' . (int)$c['id_categoria'] . '">' . e($c['nombre']) . '</option>';}
+?>
+
+<!-- MODAL REGISTRO  -->
+<div class="modal fade" id="modalRegistro" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <form class="modal-content formulario-ajax" enctype="multipart/form-data" data-modal="modalRegistro">
+      <input type="hidden" name="accion" value="crear">
+      <div class="modal-header">
+        <h2 class="modal-title h5">Registrar repuesto</h2>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+      </div>
+      <div class="modal-body">
+        <div class="alerta-modal"></div>
+        <div class="row g-3">
+          <div class="col-md-4">
+            <label class="form-label">Código</label>
+            <input type="text" name="codigo" class="form-control" maxlength="20" required>
+          </div>
+          <div class="col-md-8">
+            <label class="form-label">Nombre</label>
+            <input type="text" name="nombre" class="form-control" maxlength="120" required>
+          </div>
+          <div class="col-md-6">
+            <label class="form-label">Categoria</label>
+            <select name="id_categoria" class="form-select" required>
+                <option value="">Seleccione la categoria...</option><?= $opcionesCategorias ?>
+            </select>
+          </div>
+          <div class="col-md-3">
+            <label class="form-label">Precio (L.)</label>
+            <input type="number" name="precio" class="form-control" min="0" step="0.01" required>
+          </div>
+          <div class="col-md-3">
+            <label class="form-label">Existencias</label>
+            <input type="number" name="stock" class="form-control" min="0" step="1" required>
+          </div>
+          <div class="col-12">
+            <label class="form-label">Especificaciones</label>
+            <textarea name="especificaciones" class="form-control" rows="3" required></textarea>
+          </div>
+          <div class="col-md-4">
+            <label class="form-label">Destacado</label>
+            <select name="destacado" class="form-select">
+                <option value="0">No</option><option value="1">Si</option>
+            </select>
+          </div>
+            <div class="col-md-8">
+                <label class="form-label">Fotografia (JPG, PNG o WEBP, max. 4 MB)</label>
+                <input type="file" name="fotografia" class="form-control" accept=".jpg,.jpeg,.png,.webp">
+            </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        <button type="submit" class="btn btn-primary">Guardar</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- MODAL DE EDICION -->
+<div class="modal fade" id="modalEdicion" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <form class="modal-content formulario-ajax" enctype="multipart/form-data" data-modal="modalEdicion">
+      <input type="hidden" name="accion" value="editar">
+      <input type="hidden" name="id_repuesto" id="edit_id">
+      <div class="modal-header">
+        <h2 class="modal-title h5">Editar repuesto</h2>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+      </div>
+      <div class="modal-body">
+        <div class="alerta-modal"></div>
+        <div class="row g-3">
+          <div class="col-md-4">
+            <label class="form-label">Codigo</label>
+            <input type="text" name="codigo" id="edit_codigo" class="form-control" maxlength="20" required>
+          </div>
+          <div class="col-md-8">
+            <label class="form-label">Nombre</label>
+            <input type="text" name="nombre" id="edit_nombre" class="form-control" maxlength="120" required>
+          </div>
+          <div class="col-md-6">
+            <label class="form-label">Categoria</label>
+            <select name="id_categoria" id="edit_categoria" class="form-select" required>
+                <?= $opcionesCategorias ?>
+            </select>
+          </div>
+          <div class="col-md-3">
+            <label class="form-label">Precio (L.)</label>
+            <input type="number" name="precio" id="edit_precio" class="form-control" min="0" step="0.01" required>
+          </div>
+          <div class="col-md-3">
+            <label class="form-label">Existencias</label>
+            <input type="number" name="stock" id="edit_stock" class="form-control" min="0" step="1" required>
+          </div>
+          <div class="col-12">
+            <label class="form-label">Especificaciones</label>
+            <textarea name="especificaciones" id="edit_especificaciones" class="form-control" rows="3" required></textarea>
+          </div>
+          <div class="col-md-4">
+            <label class="form-label">Destacado</label>
+            <select name="destacado" id="edit_destacado" class="form-select">
+                <option value="0">No</option><option value="1">Si</option>
+            </select>
+          </div>
+          <div class="col-md-8">
+            <label class="form-label">Nueva fotografia (opcional)</label>
+            <input type="file" name="fotografia" class="form-control" accept=".jpg,.jpeg,.png,.webp">
+            <div class="form-text">Si no eliges una, se conservara la actual.</div>
+          </div>
+          <div class="col-12">
+            <span class="form-text d-block mb-1">Foto actual:</span>
+            <img id="edit_vista_previa" class="vista-previa-foto" src="<?= $sinFoto ?>" alt="Foto actual">
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        <button type="submit" class="btn btn-warning">Guardar cambios</button>
+      </div>
+    </form>
+  </div>
+</div>
+
 </body>
