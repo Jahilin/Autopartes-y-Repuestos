@@ -191,19 +191,13 @@ VALUES
  '12V 1.0 kW. Compatible: Toyota Corolla 2009-2019.',
  3100.00, 7, 'arranque-corolla.jpg', 0, 3),
 
--- Fluidos y Lubricantes (4)
-('FLU-001', 'Aceite 5W-30 sintético (galón)',
- 'Aceite sintético 5W-30 para motores a gasolina. Presentación de 1 galón.',
- 750.00, 60, 'aceite-5w30.jpg', 1, 4),
 ('FLU-002', 'Líquido de frenos DOT 4 (500 ml)',
  'Líquido de frenos sintético DOT 4. Presentación de 500 ml.',
  160.00, 50, 'liquido-frenos-dot4.jpg', 0, 4),
 ('FLU-003', 'Refrigerante concentrado (galón)',
  'Refrigerante concentrado para todo tipo de motor. Presentación de 1 galón.',
  320.00, 45, 'refrigerante-galon.jpg', 0, 4),
-('FLU-004', 'Aceite 10W-40 semisintético (galón)',
- 'Aceite semisintético 10W-40 para gasolina y diésel liviano. Presentación de 1 galón.',
- 620.00, 55, 'aceite-10w40.jpg', 0, 4),
+
 
 -- Aceites por marca y viscosidad (categoría 4: Fluidos y Lubricantes)
 ('ACE-CAS-5W30',  'Aceite Castrol 5W-30 sintético (galón)',        'Aceite sintético 5W-30 para gasolina. Presentación de 1 galón.',  680.00, 30, 'aceite-castrol-5w30.jpg', 0, 4),
