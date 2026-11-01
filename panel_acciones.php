@@ -51,7 +51,7 @@ function repuestoEliminar(PDO $pdo, int $id): void {
 function borrarFoto(string $carpeta, ?string $nombre): void{
     if(!$nombre) return;
     $ruta = $carpeta . basename($nombre);
-    if(is_file($ruta)) $unlink($ruta);
+    if(is_file($ruta)) unlink($ruta);
 }
 
 //Valida y limpia el formulario
@@ -72,13 +72,89 @@ function leerDatos(): array{
     if(filter_var($stock, FILTER_VALIDATE_INT) === false || (int)$stock < 0) responder(false, 'las existencias deben ser mayor o iguales a 0');
 
     return [
-        'codigo' => $codigo,
-        'nombre' => $nombre,
-        'especificaciones' => $especificaciones,
-        'precio' => round((float)$precio,2 ),
-        'stock' => (int)$stock,
-
+    'codigo' => $codigo,
+    'nombre' => $nombre,
+    'especificaciones' => $especificaciones,
+    'precio' => round((float)$precio, 2),
+    'stock' => (int)$stock,
+    'destacado' => $destacado,
+    'id_categoria' => $idCategoria,
     ];
-    
+}
+
+//El usuario elije una imagen
+function hayFotoNueva(): bool{
+return isset($_FILES['fotografia']) && $_FILES['fotografia']['error'] !== UPLOAD_ERR_NO_FILE;
+}
+
+$accion = $_POST['accion'] ?? '';
+try{
+    switch($accion){
+        case 'crear':
+            $datos = leerDatos();
+            $datos['fotografia'] = null;
+            
+            if(hayFotoNueva()){
+                $subida = new subidaArchivo($carpetaUploads);
+                if (!$subida->subir('fotografia')){
+                    responder (false, $subida->getMensajeError());
+                }
+                $datos['fotografia'] = $subida->getNombreGuardado();
+            }
+            try {
+                repuestoCrear($pdo, $datos);
+            } catch (PDOException $e){
+                borrarFoto($carpetaUploads, $datos['fotografia']); // no deja fotos huerfanas 
+                throw $e;
+            }
+            responder(true, 'Repuesto registrado correctamente.');
+        
+        case 'editar':
+            $id = (int)($_POST['id_repuesto'] ?? 0);
+            $actual = repuestoBuscar($pdo, $id);
+            if (!$actual) responder(false, 'El repuesto no existe.');
+
+            $datos = leerDatos();
+            $datos['fotografia'] = $actual['fotografia']; // se conserva si no hay foto nueva
+
+            if (hayFotoNueva()) {
+                $subida = new SubidaArchivo($carpetaUploads);
+                if (!$subida->subir('fotografia')) {
+                    responder(false, $subida->getMensajeError());
+                }
+                $datos['fotografia'] = $subida->getNombreGuardado();
+            }
+            try {
+                repuestoActualizar($pdo, $id, $datos);
+            } catch (PDOException $e) {
+                if ($datos['fotografia'] !== $actual['fotografia']) {
+                    borrarFoto($carpetaUploads, $datos['fotografia']);
+                }
+                throw $e;
+            }
+
+             // Si se cambio la foto, se borra la anterior
+            if ($datos['fotografia'] !== $actual['fotografia']) {
+                borrarFoto($carpetaUploads, $actual['fotografia']);
+            }
+            responder(true, 'Repuesto actualizado correctamente.');
+
+        case 'eliminar':
+            $id = (int)($_POST['id_repuesto'] ?? 0);
+            $actual = repuestoBuscar($pdo, $id);
+            if (!$actual) responder(false, 'El repuesto no existe.');
+
+            repuestoEliminar($pdo, $id);
+            borrarFoto($carpetaUploads, $actual['fotografia']);
+            responder(true, 'Repuesto "' . $actual['nombre'] . '" eliminado correctamente.');
+
+        default:
+            responder(false, 'Acción no valida.');
+    }
+} catch (PDOException $e){
+    if($e->getCode() === '23000'){
+        responder(false, 'Ya existe un repuesto con ese codigo o la categoria no es valida.');
+    }
+    responder(false, 'Error en la base de datos. Intente de nuevo');
 }
 ?>
