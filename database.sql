@@ -229,7 +229,7 @@ VALUES
 ('FRE-003', 'Pastillas cerámicas',     'Pastillas de freno cerámicas de bajo ruido y poco polvo.',          950.00, 20, 'pastillas-ceramicas.jpg', 0, 1),
 ('FLU-005', 'Limpiador de inyectores', 'Aditivo limpiador de inyectores para gasolina. Frasco de 355 ml.',  260.00, 35, 'limpiador-inyectores.jpg', 0, 4);
 
--- Sucursales (direcciones y teléfonos de ejemplo: ajustar si se dispone de los reales)
+-- Sucursales (direcciones y teléfonos de ejemplo)
 INSERT INTO sucursales (nombre, ciudad, direccion, telefono) VALUES
 ('Sucursal Toncontín', 'Tegucigalpa',  'Zona Toncontín, Tegucigalpa, Francisco Morazán', '2222-0001'),
 ('Sucursal Suyapa',    'Tegucigalpa',  'Colonia Suyapa, Tegucigalpa, Francisco Morazán', '2222-0002'),
