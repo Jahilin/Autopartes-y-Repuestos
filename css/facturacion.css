@@ -1,0 +1,25 @@
+.factura {
+    max-width: 800px;
+    margin-inline: auto;
+}
+
+.factura .totales {
+    max-width: 420px;
+}
+
+.factura .totales td {
+    padding: .35rem .6rem;
+}
+
+@media print {
+    nav,
+    footer,
+    .d-print-none {
+        display: none !important;
+    }
+
+    .factura {
+        box-shadow: none !important;
+        border: 0;
+    }
+}
