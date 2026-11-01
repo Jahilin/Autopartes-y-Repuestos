@@ -1,0 +1,26 @@
+/* Estilos del panel de inventario */
+.panel-titulo { font-weight: 700; }
+
+.tabla-inventario img.miniatura {
+    width: 56px;
+    height: 56px;
+    object-fit: cover;
+    border-radius: 6px;
+    border: 1px solid #dee2e6;
+    background: #f8f9fa;
+}
+
+.tabla-inventario th { white-space: nowrap; }
+.tabla-inventario td { vertical-align: middle; }
+
+.stock-bajo { color: #dc3545; font-weight: 700; }
+
+.vista-previa-foto {
+    max-width: 120px;
+    max-height: 120px;
+    object-fit: cover;
+    border-radius: 6px;
+    border: 1px solid #dee2e6;
+}
+
+.alerta-modal:empty { display: none; }
