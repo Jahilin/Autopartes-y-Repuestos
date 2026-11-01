@@ -57,7 +57,7 @@ include 'includes/navbar.php';
                         <?php foreach ($f['detalle'] as $d) { ?>
                             <tr>
                                 <td><?php echo htmlspecialchars($d['descripcion']); ?></td>
-                                <td><?php echo $d['cantidad']; ?></td>
+                                <td><?php echo floatval($d['cantidad']); ?></td>
                                 <td>L. <?php echo number_format($d['precio_unitario'], 2); ?></td>
                                 <td>L. <?php echo number_format($d['subtotal'], 2); ?></td>
                             </tr>
