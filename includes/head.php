@@ -9,7 +9,7 @@
      <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
 
     <link href="css/general.css" rel="stylesheet">
-    <link rel="stylesheet" href="../css/style.css">
+    <link href="css/style.css" rel="stylesheet">
     <?php if (isset($css)) { ?>
         <link href="css/<?php echo $css; ?>.css" rel="stylesheet">
     <?php } ?>

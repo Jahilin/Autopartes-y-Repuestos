@@ -59,7 +59,9 @@ foreach ($adicionales as $a) {
 }
 
 $titulo = 'Arma tu Kit Tune-Up';
-include __DIR__ . '/includes/head.php';
+require_once __DIR__ . '/includes/helpers.php';
+require_once __DIR__ . '/includes/head.php';
+require_once __DIR__ . '/includes/navbar.php';
 ?>
 
 <style>
@@ -177,7 +179,7 @@ include __DIR__ . '/includes/head.php';
             <?php } ?>
         </div>
         <div class="col-lg-4">
-            <aside class="card sticky-top" style="top: 1rem;">
+            <aside class="card sticky-top" style="top: 8rem;">
                 <div class="card-header barra-oscura text-white">
                     <strong>Su kit Tune-Up</strong>
                 </div>
@@ -284,4 +286,4 @@ include __DIR__ . '/includes/head.php';
 })();
 </script>
 
-<?php include __DIR__ . '/includes/scripts.php'; ?>
+<?php require_once __DIR__ . '/includes/footer.php'; ?>

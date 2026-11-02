@@ -76,11 +76,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 }
-
-$titulo = 'Facturación';
 $css    = 'facturacion';
-include __DIR__ . '/includes/head.php';
-include __DIR__ . '/includes/navbar.php'
+$titulo = 'Arma tu Kit Tune-Up';
+require_once __DIR__ . '/includes/helpers.php';
+require_once __DIR__ . '/includes/head.php';
+require_once __DIR__ . '/includes/navbar.php';
+
 ?>
 
     <main class="container py-4">
@@ -184,5 +185,5 @@ include __DIR__ . '/includes/navbar.php'
             </form>
         <?php } ?>
     </main>
-<?php include __DIR__ . '/includes/footer.php'; ?>
-<?php include __DIR__ . '/includes/scripts.php'; ?>
+
+<?php require_once __DIR__ . '/includes/footer.php'; ?>
