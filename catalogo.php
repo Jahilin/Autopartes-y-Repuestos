@@ -54,7 +54,9 @@ foreach ($categorias as $categoria) {
 $lempiras = fn($valor) => 'L. ' . number_format($valor, 2);
 
 $titulo = 'Catálogo';
-include __DIR__ . '/includes/head.php';
+require_once __DIR__ . '/includes/helpers.php';
+require_once __DIR__ . '/includes/head.php';
+require_once __DIR__ . '/includes/navbar.php';
 ?>
 
 <div class="container py-4">
@@ -222,4 +224,4 @@ document.querySelectorAll('.selector-marca').forEach(function (selector) {
 });
 </script>
 
-<?php include __DIR__ . '/includes/scripts.php'; ?>
+<?php require_once __DIR__ . '/includes/footer.php'; ?>

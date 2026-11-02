@@ -1,30 +1,36 @@
 <?php
+require_once __DIR__ . '/includes/helpers.php';
+require_once __DIR__ . '/includes/head.php';
 require_once __DIR__ . '/includes/auth_check.php';
 
 //Elimnacion del codigo temporal. Union de las clases repuesto.php + categoria.php
 require_once __DIR__ . '/clases/Repuesto.php';
 require_once __DIR__ . '/clases/Categoria.php';
 
+
 $repuestos = (new Repuesto())->listarTodos();
 $categorias = (new Categoria())->listar();
 
-function e($texto){return htmlspecialchars((string)$texto, ENT_QUOTES, 'UTF-8');}
 
 // Imagen para repuestos sin fotografia
 $sinFoto = 'data:image/svg+xml;utf8,' . rawurlencode(
     '<svg xmlns="http://www.w3.org/2000/svg" width="56" height="56"><rect width="56" height="56" fill="#e9ecef"/><text x="28" y="33" font-size="10" text-anchor="middle" fill="#6c757d">Sin foto</text></svg>');
 ?>
 
+<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Panel de Inventario | Don Pancho</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
     <link rel="stylesheet" href="css/general.css">
+    <link rel="stylesheet" href="css/styless.css">
     <link rel="stylesheet" href="css/panel.css">
 </head>
 <body>
+
 <?php include __DIR__ . '/includes/navbar.php'; ?>
 
 <main class="container py-4">
@@ -234,12 +240,8 @@ foreach ($categorias as $c) {$opcionesCategorias .= '<option value="' . (int)$c[
   </div>
 </div>
 
-<?php include __DIR__ . '/includes/footer.php'; ?>
-
-
 
 <!-- JAVASCRIPT-->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script>
 const SIN_FOTO = <?= json_encode($sinFoto) ?>;
 
@@ -299,4 +301,4 @@ document.querySelectorAll('.formulario-ajax').forEach(form => {
     });
 });
 </script>
-</body>
+<?php include __DIR__ . '/includes/footer.php'; ?>

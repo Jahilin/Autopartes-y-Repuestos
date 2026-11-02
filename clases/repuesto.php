@@ -29,11 +29,16 @@ class Repuesto {
     }
 
     // Aca traemos los repuestos que dejaremos como destacados en el inicio
-    public function listarDestacados() {
-        $sql = 'SELECT * FROM repuestos WHERE destacado = 1 LIMIT 5';
-        $consulta = $this->pdo->query($sql);
-        return $consulta->fetchAll();
-    }
+    public function listarDestacados(): array
+{
+    $sql = 'SELECT r.*, c.nombre AS categoria
+            FROM repuestos r
+            INNER JOIN categorias c ON c.id_categoria = r.id_categoria
+            WHERE r.destacado = 1
+            ORDER BY r.id_repuesto DESC
+            LIMIT 6';
+    return $this->pdo->query($sql)->fetchAll();
+}
 
     // Aca buscamos un solo repuesto, por su id
     public function buscarPorId($id) {
