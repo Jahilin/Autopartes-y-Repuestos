@@ -80,6 +80,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 $titulo = 'Facturación';
 $css    = 'facturacion';
 include __DIR__ . '/includes/head.php';
+include __DIR__ . '/includes/navbar.php'
 ?>
 
     <main class="container py-4">
@@ -183,5 +184,5 @@ include __DIR__ . '/includes/head.php';
             </form>
         <?php } ?>
     </main>
-
+<?php include __DIR__ . '/includes/footer.php'; ?>
 <?php include __DIR__ . '/includes/scripts.php'; ?>
