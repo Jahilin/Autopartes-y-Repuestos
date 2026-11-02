@@ -76,7 +76,6 @@ $categorias = $categoriaModel->listar();
                         <span class="codigo mb-1"><?= e($repuesto['codigo']) ?></span>
                         <h6 class="fw-bold mb-1"><?= e($repuesto['nombre']) ?></h6>
                         <span class="badge badge-categoria align-self-start mb-2"><?= e($repuesto['categoria']) ?></span>
-                        <p class="small text-muted mb-3"><?= e($repuesto['marca_vehiculo']) ?></p>
                         <div class="mt-auto d-flex justify-content-between align-items-center">
                             <span class="precio"><?= e(dinero((float) $repuesto['precio'])) ?></span>
                             <span class="small text-muted">Stock: <?= e((string) $repuesto['stock']) ?></span>
