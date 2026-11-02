@@ -55,3 +55,7 @@ function base_url(string $ruta = ''): string
     $raiz = rtrim($raiz, '/');
     return $raiz . '/' . ltrim($ruta, '/');
 }
+
+function dinero(float $valor): string{
+    return 'L. ' . number_format($valor, 2, '.', ',');
+}
