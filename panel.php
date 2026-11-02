@@ -1,4 +1,5 @@
 <?php
+$titulo = 'Inventario';
 require_once __DIR__ . '/includes/helpers.php';
 require_once __DIR__ . '/includes/head.php';
 require_once __DIR__ . '/includes/auth_check.php';
@@ -6,6 +7,7 @@ require_once __DIR__ . '/includes/auth_check.php';
 //Elimnacion del codigo temporal. Union de las clases repuesto.php + categoria.php
 require_once __DIR__ . '/clases/Repuesto.php';
 require_once __DIR__ . '/clases/Categoria.php';
+
 
 
 $repuestos = (new Repuesto())->listarTodos();
@@ -301,4 +303,4 @@ document.querySelectorAll('.formulario-ajax').forEach(form => {
     });
 });
 </script>
-<?php include __DIR__ . '/includes/footer.php'; ?>
+<?php include __DIR__ . '/includes/footer.php'; ?>admin@donpancho.hn 
