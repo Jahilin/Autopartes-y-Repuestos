@@ -1,17 +1,12 @@
 <?php
-//Proteccion de rutas (lo termina el 2do integrante. Mientras este vacio no bloquea)
 require_once __DIR__ . '/includes/auth_check.php';
-require_once __DIR__ . '/config/conexion.php';
 
-//Temporal: se remplazara por Repuesto::listarTodos() y Categoria::listar()
-$pdo = (new Conexion())->obtener();
-$repuestos= $pdo-> query(
-    "SELECT r.*, c.nombre AS categoria FROM repuestos r
-    INNER JOIN categorias c ON c.id_categoria = r.id_categoria
-    ORDER BY r.id_repuesto"
-)->fetchAll();
-$categorias = $pdo->query("SELECT id_categoria, nombre FROM categorias ORDER BY nombre")->fetchAll();
-// FIN TEMPORAL
+//Elimnacion del codigo temporal. Union de las clases repuesto.php + categoria.php
+require_once __DIR__ . '/clases/Repuesto.php';
+require_once __DIR__ . '/clases/Categoria.php';
+
+$repuestos = (new Repuesto())->listarTodos();
+$categorias = (new Categoria())->listar();
 
 function e($texto){return htmlspecialchars((string)$texto, ENT_QUOTES, 'UTF-8');}
 

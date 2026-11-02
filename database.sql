@@ -110,7 +110,7 @@ CREATE TABLE detalle_factura (
     id_factura       INT           NOT NULL,
     id_repuesto      INT           NULL,
     descripcion      VARCHAR(120)  NOT NULL,
-    cantidad         INT           NOT NULL,
+    cantidad         DECIMAL(10,2) NOT NULL,
     precio_unitario  DECIMAL(10,2) NOT NULL,
     subtotal         DECIMAL(10,2) NOT NULL,
     CONSTRAINT fk_detalle_facturas
@@ -121,8 +121,6 @@ CREATE TABLE detalle_factura (
         ON UPDATE CASCADE ON DELETE SET NULL
 ) ENGINE=InnoDB;
 
-ALTER TABLE detalle_factura
-    MODIFY cantidad DECIMAL(10,2) NOT NULL;
 
 -- =====================================================================
 -- DATOS
@@ -147,7 +145,7 @@ INSERT INTO categorias (nombre) VALUES
 ('Sistema Eléctrico'),
 ('Fluidos y Lubricantes');
 
--- Repuestos (los 5 destacados llevan destacado = 1)
+-- Repuestos (34 en total; los 5 destacados llevan destacado = 1)
 INSERT INTO repuestos
     (codigo, nombre, especificaciones, precio, stock, fotografia, destacado, id_categoria)
 VALUES
@@ -193,48 +191,39 @@ VALUES
  '12V 1.0 kW. Compatible: Toyota Corolla 2009-2019.',
  3100.00, 7, 'arranque-corolla.jpg', 0, 3),
 
--- Fluidos y Lubricantes (4)
-('FLU-001', 'Aceite 5W-30 sintético (galón)',
- 'Aceite sintético 5W-30 para motores a gasolina. Presentación de 1 galón.',
- 750.00, 60, 'aceite-5w30.jpg', 1, 4),
 ('FLU-002', 'Líquido de frenos DOT 4 (500 ml)',
  'Líquido de frenos sintético DOT 4. Presentación de 500 ml.',
  160.00, 50, 'liquido-frenos-dot4.jpg', 0, 4),
 ('FLU-003', 'Refrigerante concentrado (galón)',
  'Refrigerante concentrado para todo tipo de motor. Presentación de 1 galón.',
  320.00, 45, 'refrigerante-galon.jpg', 0, 4),
-('FLU-004', 'Aceite 10W-40 semisintético (galón)',
- 'Aceite semisintético 10W-40 para gasolina y diésel liviano. Presentación de 1 galón.',
- 620.00, 55, 'aceite-10w40.jpg', 0, 4);
 
- INSERT INTO repuestos
-    (codigo, nombre, especificaciones, precio, stock, fotografia, destacado, id_categoria)
-VALUES
+
 -- Aceites por marca y viscosidad (categoría 4: Fluidos y Lubricantes)
-('ACE-CAS-5W30',  'Aceite Castrol 5W-30 sintético (galón)',        'Aceite sintético 5W-30 para gasolina. Presentación de 1 galón.',  680.00, 30, NULL, 0, 4),
-('ACE-CAS-10W40', 'Aceite Castrol 10W-40 semisintético (galón)',   'Aceite semisintético 10W-40. Presentación de 1 galón.',           560.00, 30, NULL, 0, 4),
-('ACE-CAS-15W40', 'Aceite Castrol 15W-40 diésel (galón)',          'Aceite 15W-40 para motores diésel. Presentación de 1 galón.',     520.00, 30, NULL, 0, 4),
-('ACE-MOB-5W30',  'Aceite Mobil 5W-30 sintético (galón)',          'Aceite sintético 5W-30 para gasolina. Presentación de 1 galón.',  700.00, 30, NULL, 0, 4),
-('ACE-MOB-10W40', 'Aceite Mobil 10W-40 semisintético (galón)',     'Aceite semisintético 10W-40. Presentación de 1 galón.',           575.00, 30, NULL, 0, 4),
-('ACE-MOB-15W40', 'Aceite Mobil 15W-40 diésel (galón)',            'Aceite 15W-40 para motores diésel. Presentación de 1 galón.',     530.00, 30, NULL, 0, 4),
-('ACE-SHE-5W30',  'Aceite Shell 5W-30 sintético (galón)',          'Aceite sintético 5W-30 para gasolina. Presentación de 1 galón.',  650.00, 30, NULL, 0, 4),
-('ACE-SHE-10W40', 'Aceite Shell 10W-40 semisintético (galón)',     'Aceite semisintético 10W-40. Presentación de 1 galón.',           540.00, 30, NULL, 0, 4),
-('ACE-SHE-15W40', 'Aceite Shell 15W-40 diésel (galón)',            'Aceite 15W-40 para motores diésel. Presentación de 1 galón.',     500.00, 30, NULL, 0, 4),
-('ACE-VAL-5W30',  'Aceite Valvoline 5W-30 sintético (galón)',      'Aceite sintético 5W-30 para gasolina. Presentación de 1 galón.',  640.00, 30, NULL, 0, 4),
-('ACE-VAL-10W40', 'Aceite Valvoline 10W-40 semisintético (galón)', 'Aceite semisintético 10W-40. Presentación de 1 galón.',           530.00, 30, NULL, 0, 4),
-('ACE-VAL-15W40', 'Aceite Valvoline 15W-40 diésel (galón)',        'Aceite 15W-40 para motores diésel. Presentación de 1 galón.',     495.00, 30, NULL, 0, 4),
+('ACE-CAS-5W30',  'Aceite Castrol 5W-30 sintético (galón)',        'Aceite sintético 5W-30 para gasolina. Presentación de 1 galón.',  680.00, 30, 'aceite-castrol-5w30.jpg', 0, 4),
+('ACE-CAS-10W40', 'Aceite Castrol 10W-40 semisintético (galón)',   'Aceite semisintético 10W-40. Presentación de 1 galón.',           560.00, 30, 'aceite-castrol-10w40.jpg', 0, 4),
+('ACE-CAS-15W40', 'Aceite Castrol 15W-40 diésel (galón)',          'Aceite 15W-40 para motores diésel. Presentación de 1 galón.',     520.00, 30, 'aceite-castrol-15w40.jpg', 0, 4),
+('ACE-MOB-5W30',  'Aceite Mobil 5W-30 sintético (galón)',          'Aceite sintético 5W-30 para gasolina. Presentación de 1 galón.',  700.00, 30, 'aceite-mobil-5w30.jpg', 0, 4),
+('ACE-MOB-10W40', 'Aceite Mobil 10W-40 semisintético (galón)',     'Aceite semisintético 10W-40. Presentación de 1 galón.',           575.00, 30, 'aceite-mobil-10w40.jpg', 0, 4),
+('ACE-MOB-15W40', 'Aceite Mobil 15W-40 diésel (galón)',            'Aceite 15W-40 para motores diésel. Presentación de 1 galón.',     530.00, 30, 'aceite-mobil-15w40.jpg', 0, 4),
+('ACE-SHE-5W30',  'Aceite Shell 5W-30 sintético (galón)',          'Aceite sintético 5W-30 para gasolina. Presentación de 1 galón.',  650.00, 30, 'aceite-shell-5w30.jpg', 0, 4),
+('ACE-SHE-10W40', 'Aceite Shell 10W-40 semisintético (galón)',     'Aceite semisintético 10W-40. Presentación de 1 galón.',           540.00, 30, 'aceite-shell-10w40.jpg', 0, 4),
+('ACE-SHE-15W40', 'Aceite Shell 15W-40 diésel (galón)',            'Aceite 15W-40 para motores diésel. Presentación de 1 galón.',     500.00, 30, 'aceite-shell-15w40.jpg', 0, 4),
+('ACE-VAL-5W30',  'Aceite Valvoline 5W-30 sintético (galón)',      'Aceite sintético 5W-30 para gasolina. Presentación de 1 galón.',  640.00, 30, 'aceite-valvoline-5w30.jpg', 0, 4),
+('ACE-VAL-10W40', 'Aceite Valvoline 10W-40 semisintético (galón)', 'Aceite semisintético 10W-40. Presentación de 1 galón.',           530.00, 30, 'aceite-valvoline-10w40.jpg', 0, 4),
+('ACE-VAL-15W40', 'Aceite Valvoline 15W-40 diésel (galón)',        'Aceite 15W-40 para motores diésel. Presentación de 1 galón.',     495.00, 30, 'aceite-valvoline-15w40.jpg', 0, 4),
 
 -- Filtros (categoría 2: Motor y Transmisión)
-('FIL-001', 'Filtro de aceite',       'Filtro de aceite de alta retención para motores a gasolina y diésel.', 220.00, 40, NULL, 0, 2),
-('FIL-002', 'Filtro de aire',         'Filtro de aire de motor, elemento de papel plisado.',                  380.00, 40, NULL, 0, 2),
-('FIL-003', 'Filtro de combustible',  'Filtro de combustible en línea.',                                      340.00, 40, NULL, 0, 2),
-('FIL-004', 'Filtro de cabina (A/C)', 'Filtro de cabina con carbón activado para el aire acondicionado.',     290.00, 40, NULL, 0, 2),
+('FIL-001', 'Filtro de aceite',       'Filtro de aceite de alta retención para motores a gasolina y diésel.', 220.00, 40, 'filtro-aceite.jpg', 0, 2),
+('FIL-002', 'Filtro de aire',         'Filtro de aire de motor, elemento de papel plisado.',                  380.00, 40, 'filtro-aire.jpg', 0, 2),
+('FIL-003', 'Filtro de combustible',  'Filtro de combustible en línea.',                                      340.00, 40, 'filtro-combustible.jpg', 0, 2),
+('FIL-004', 'Filtro de cabina (A/C)', 'Filtro de cabina con carbón activado para el aire acondicionado.',     290.00, 40, 'filtro-cabina.jpg', 0, 2),
 
 -- Adicionales que faltaban
-('FRE-003', 'Pastillas cerámicas',     'Pastillas de freno cerámicas de bajo ruido y poco polvo.',          950.00, 20, NULL, 0, 1),
-('FLU-005', 'Limpiador de inyectores', 'Aditivo limpiador de inyectores para gasolina. Frasco de 355 ml.',  260.00, 35, NULL, 0, 4);
+('FRE-003', 'Pastillas cerámicas',     'Pastillas de freno cerámicas de bajo ruido y poco polvo.',          950.00, 20, 'pastillas-ceramicas.jpg', 0, 1),
+('FLU-005', 'Limpiador de inyectores', 'Aditivo limpiador de inyectores para gasolina. Frasco de 355 ml.',  260.00, 35, 'limpiador-inyectores.jpg', 0, 4);
 
--- Sucursales (direcciones y teléfonos de ejemplo: ajustar si se dispone de los reales)
+-- Sucursales (direcciones y teléfonos de ejemplo)
 INSERT INTO sucursales (nombre, ciudad, direccion, telefono) VALUES
 ('Sucursal Toncontín', 'Tegucigalpa',  'Zona Toncontín, Tegucigalpa, Francisco Morazán', '2222-0001'),
 ('Sucursal Suyapa',    'Tegucigalpa',  'Colonia Suyapa, Tegucigalpa, Francisco Morazán', '2222-0002'),
