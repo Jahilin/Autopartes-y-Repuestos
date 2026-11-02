@@ -18,9 +18,9 @@ $enAdmin = str_contains($_SERVER['SCRIPT_NAME'] ?? '', '/admin/');
         <div class="collapse navbar-collapse" id="navPrincipal">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item"><a class="nav-link" href="<?= e(base_url('index.php')) ?>">Inicio</a></li>
-                <li class="nav-item"><a class="nav-link" href="">Catálogo</a></li>
-                <li class="nav-item"><a class="nav-link" href="">Arma tu Kit</a></li>
-                <li class="nav-item"><a class="nav-link" href="">Sucursales</a></li>
+                <li class="nav-item"><a class="nav-link" href="<?= e(base_url('catalogo.php')) ?>">Catálogo</a></li>
+                <li class="nav-item"><a class="nav-link" href="<?= e(base_url('tuneup.php')) ?>">Arma tu Kit</a></li>
+                <li class="nav-item"><a class="nav-link" href="<?= e(base_url('sucursales.php')) ?>">Sucursales</a></li>
                 <?php if ($usuarioActual): ?>
                     <li class="nav-item"><a class="nav-link <?= $enAdmin ? 'active' : '' ?>" href="<?= e(base_url('panel.php')) ?>"><i class="bi bi-speedometer2 me-1"></i>Panel</a></li>
                 <?php endif; ?>
